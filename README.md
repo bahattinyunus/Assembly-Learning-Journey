@@ -1,6 +1,6 @@
 <div align="center">
 
-![Assembly Learning Journey Banner](./assets/banner.png)
+![Assembly Learning Journey Banner](./assets/banner_new.png)
 
 # 🖥️ Assembly Learning Journey
 
