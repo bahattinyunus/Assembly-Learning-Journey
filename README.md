@@ -24,6 +24,10 @@
 Bu repo, x86-64 Assembly dilini sıfırdan öğrenme yolculuğumu belgeler. Her bölüm, teorik açıklamalar ve çalışan kod örnekleri içerir. Amaç: "low-level" programlamayı gerçekten anlamak — CPU'nun nasıl çalıştığını, hafızanın nasıl yönetildiğini ve işletim sisteminin Assembly koduyla nasıl etkileşime girdiğini kavramak.
 
 > **"Assembly öğrenmek, bilgisayarın dilini konuşmayı öğrenmek gibidir."**
+>
+> **"High-level diller size ne yapacağınızı söyler, Assembly ise nasıl yapıldığını gösterir."**
+>
+> **"Real programmers can write assembly code in any language."** — Larry Wall
 
 ---
 
