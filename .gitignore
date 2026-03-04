@@ -1,0 +1,29 @@
+# Compiled object files
+*.o
+*.obj
+
+# Compiled binaries (no extension on Linux)
+# List specific binary names here, e.g.:
+# hello_world
+# main
+
+# Windows executables
+*.exe
+
+# Debug files
+*.dSYM/
+*.su
+
+# GDB history
+.gdb_history
+
+# Editor files
+.vscode/
+*.swp
+*.swo
+*~
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

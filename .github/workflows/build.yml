@@ -1,0 +1,63 @@
+name: NASM Build Check
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Assemble & Link All Programs
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install NASM and binutils
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y nasm binutils
+
+      - name: Print tool versions
+        run: |
+          nasm --version
+          ld --version | head -1
+
+      - name: Assemble all .asm files
+        run: |
+          echo "🔧 Assembling all .asm files..."
+          FAILED=0
+          find . -name "*.asm" | sort | while read f; do
+            echo -n "  [ASM] $f ... "
+            obj="${f%.asm}.o"
+            if nasm -f elf64 "$f" -o "$obj" 2>/dev/null; then
+              echo "✅"
+              rm -f "$obj"
+            else
+              echo "❌"
+              nasm -f elf64 "$f" -o "$obj"
+              FAILED=$((FAILED + 1))
+            fi
+          done
+          if [ $FAILED -ne 0 ]; then
+            echo "::error::$FAILED file(s) failed to assemble"
+            exit 1
+          fi
+          echo ""
+          echo "✅ All files assembled successfully!"
+
+      - name: Link hello_world (smoke test)
+        run: |
+          nasm -f elf64 00_Basics/hello_world.asm -o /tmp/hw.o
+          ld /tmp/hw.o -o /tmp/hello_world
+          echo "Output:"
+          /tmp/hello_world
+
+      - name: Count stats
+        run: |
+          echo "📊 Repository Statistics"
+          echo "  .asm files:   $(find . -name '*.asm' | wc -l)"
+          echo "  .md files:    $(find . -name '*.md'  | wc -l)"
+          echo "  Total lines:  $(find . -name '*.asm' | xargs wc -l 2>/dev/null | tail -1 | awk '{print $1}')"
