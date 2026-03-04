@@ -21,16 +21,20 @@ SRCS_03 := 03_Procedures/functions.asm 03_Procedures/stack.asm
 SRCS_04 := 04_Memory/memory_addressing.asm
 SRCS_05 := 05_System_Calls/linux_syscalls.asm
 SRCS_06 := 06_Optimization/loop_unrolling.asm 06_Optimization/branch_opt.asm
-SRCS_07 := 07_Projects/calculator.asm 07_Projects/string_utils.asm 07_Projects/number_printer.asm
+SRCS_07 := 07_Projects/calculator.asm 07_Projects/string_utils.asm 07_Projects/number_printer.asm 07_Projects/xor_cipher.asm
+SRCS_08 := 08_FPU_SIMD/fpu_basics.asm 08_FPU_SIMD/simd_ops.asm
+SRCS_09 := 09_Inline_Asm/inline.c
+SRCS_10 := 10_OS_Dev/boot.asm
 
-ALL_SRCS := $(SRCS_00) $(SRCS_01) $(SRCS_02) $(SRCS_03) $(SRCS_04) $(SRCS_05) $(SRCS_06) $(SRCS_07)
+ALL_SRCS := $(SRCS_00) $(SRCS_01) $(SRCS_02) $(SRCS_03) $(SRCS_04) $(SRCS_05) $(SRCS_06) $(SRCS_07) $(SRCS_08)
+ASM_ONLY := $(filter %.asm, $(ALL_SRCS) $(SRCS_10))
 
 # Her .asm -> bin/ klasöründe binary
 BINS := $(patsubst %.asm, bin/%, $(ALL_SRCS))
 
 .PHONY: all clean hello run check dirs
 
-all: dirs $(BINS)
+all: dirs $(BINS) bin/09_Inline_Asm/inline bin/10_OS_Dev/boot
 	@echo ""
 	@echo "✅ Tüm programlar başarıyla derlendi!"
 	@echo "   Binaries: bin/ dizininde"
@@ -38,14 +42,25 @@ all: dirs $(BINS)
 dirs:
 	@mkdir -p bin/00_Basics bin/01_Data_Types bin/02_Control_Flow \
 	           bin/03_Procedures bin/04_Memory bin/05_System_Calls \
-	           bin/06_Optimization bin/07_Projects
+	           bin/06_Optimization bin/07_Projects bin/08_FPU_SIMD \
+	           bin/09_Inline_Asm bin/10_OS_Dev
 
 # Genel kural: .asm -> .o -> binary
 bin/%: %.asm
 	@echo "  [ASM] $<"
-	@$(NASM) $(NASMFLAGS) $< -o $@.o
-	@$(LD) $(LDFLAGS) $@.o -o $@
-	@rm -f $@.o
+	@if [ "$*" = "10_OS_Dev/boot" ]; then \
+		$(NASM) -f bin $< -o $@; \
+	else \
+		$(NASM) $(NASMFLAGS) $< -o $@.o; \
+		$(LD) $(LDFLAGS) $@.o -o $@; \
+		rm -f $@.o; \
+	fi
+	@echo "  [OK ] $@"
+
+# C + Inline Asm kuralı
+bin/09_Inline_Asm/inline: 09_Inline_Asm/inline.c
+	@echo "  [CC ] $<"
+	@$(CC) $< -o $@
 	@echo "  [OK ] $@"
 
 # Hızlı hedefler
@@ -59,7 +74,7 @@ run: hello
 # Sadece syntax kontrolü (linksiz)
 check:
 	@echo "Syntax kontrol ediliyor..."
-	@for f in $(ALL_SRCS); do \
+	@for f in $(ASM_ONLY); do \
 		$(NASM) -f elf64 $$f -o /dev/null 2>&1 && echo "  OK: $$f" || echo "  FAIL: $$f"; \
 	done
 

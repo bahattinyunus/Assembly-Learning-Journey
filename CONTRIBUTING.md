@@ -36,10 +36,10 @@ Mevcut bir bölüme yeni `.asm` örneği eklemek istiyorsan:
 
 ### 3. Yeni Bölüm Önermek
 
-Issue açarak hangi bölümün eksik olduğunu belirt. Önerilere açığız:
-- `09_OS_Dev/` — Basit bootloader
-- `10_Inline_Asm/` — C içinde inline assembly
-- `11_ARM64/` — ARM Assembly (Raspberry Pi / Apple M1)
+Hangi bölümün eksik olduğunu belirtmek için Issue açabilirsin. Örnek fikirler:
+- `11_Advanced_SIMD/` — AVX-512 ve gelişmiş vektör işlemleri
+- `12_Reverse_Engineering/` — Binary analizi temelleri
+- `13_ARM64/` — ARM Assembly (Raspberry Pi / Apple Silicon)
 
 ## 📋 Kod Standartları
 

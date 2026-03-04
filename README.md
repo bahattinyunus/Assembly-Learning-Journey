@@ -11,7 +11,7 @@
 ![Language](https://img.shields.io/badge/Language-x86--64%20Assembly-blue)
 ![Assembler](https://img.shields.io/badge/Assembler-NASM-red)
 ![Platform](https://img.shields.io/badge/Platform-Linux-green)
-![Sections](https://img.shields.io/badge/Bölüm-8-purple)
+![Sections](https://img.shields.io/badge/Bölüm-10-purple)
 ![Files](https://img.shields.io/badge/Dosya-20%2B%20.asm-orange)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg)](CONTRIBUTING.md)
 
@@ -40,6 +40,8 @@ Bu repo, x86-64 Assembly dilini sıfırdan öğrenme yolculuğumu belgeler. Her 
 | 06 | [Optimizasyon](./06_Optimization/) | Loop Unroll, Branchless, CMOV | `loop_unrolling`, `branch_opt` | ✅ |
 | 07 | [Projeler](./07_Projects/) | Hesap Makinesi, String Lib, Printer | `calculator`, `string_utils`, `number_printer` | ✅ |
 | 08 | [FPU & SIMD](./08_FPU_SIMD/) | SSE2, AVX, Float/Double, Packed | `fpu_basics` | ✅ |
+| 09 | [Inline C & Assembly](./09_Inline_Asm/) | GCC Extended Asm, RDTSC | `inline.c` | ✅ |
+| 10 | [OS Dev Giriş](./10_OS_Dev/) | 16-bit BIOS Kesmeleri, Bootloader | `boot.asm` | ✅ |
 
 ---
 
@@ -106,6 +108,36 @@ link program.obj /subsystem:console /entry:_start
 - Dosya okuma/yazma, process yönetimi
 - Exit codes
 
+### [06 - Optimizasyon](./06_Optimization/)
+- Döngü açma (Loop Unrolling) teknikleri
+- Tahmin edilebilir dallanma (Branch Prediction) optimizasyonu
+- `CMOV` (Conditional Move) kullanımı
+- Gereksiz instruction'lardan kaçınma
+
+### [07 - Projeler](./07_Projects/)
+- Basit bir hesap makinesi (`calculator.asm`)
+- String işleme kütüphanesi (`string_utils.asm`)
+- Sayıdan string'e dönüşüm (`number_printer.asm`)
+- Dosya şifreleme (XOR Cipher - Yakında)
+
+### [08 - FPU & SIMD](./08_FPU_SIMD/)
+- Floating Point Unit (FPU) temelleri
+- SSE/AVX register'ları ve komutları
+- Paralel işlem (SIMD) ile performans artışı
+- Vektör toplama ve çarpma örnekleri
+
+### [09 - Inline C & Assembly](./09_Inline_Asm/)
+- GCC Extended Assembly syntax'ı
+- C değişkenlerini Assembly içinde kullanma
+- Kritik performans gerektiren blokları Assembly ile yazma
+- `RDTSC` ile zaman ölçümü
+
+### [10 - OS Dev Giriş](./10_OS_Dev/)
+- 16-bit Real Mode ve BIOS kesmeleri (`INT 0x10`, `INT 0x13`)
+- Boot sector (511 + 0xAA55) yapısı
+- Basit bir bootloader yazımı
+- QEMU ile test etme
+
 ---
 
 ## 🔑 Hızlı Referans
@@ -162,8 +194,28 @@ Assembly-Learning-Journey/
 ├── 05_System_Calls/
 │   ├── linux_syscalls.asm  # Linux syscall örnekleri
 │   └── README.md
+├── 06_Optimization/
+│   ├── loop_unrolling.asm  # Döngü optimizasyonu
+│   ├── branch_opt.asm      # Dallanma optimizasyonu
+│   └── README.md
+├── 07_Projects/
+│   ├── calculator.asm      # Hesap makinesi
+│   ├── xor_cipher.asm      # XOR Şifreleme (Yeni)
+│   └── README.md
+├── 08_FPU_SIMD/
+│   ├── fpu_basics.asm      # FPU işlemleri
+│   ├── simd_ops.asm        # SIMD/SSE işlemleri (Yeni)
+│   └── README.md
+├── 09_Inline_Asm/
+│   ├── inline.c            # C + Inline Assembly
+│   └── README.md
+├── 10_OS_Dev/
+│   ├── boot.asm            # Basit Bootloader
+│   └── README.md
 ├── resources/
-│   └── cheatsheet.md       # Hızlı referans kağıdı
+│   ├── cheatsheet.md       # Hızlı referans kağıdı
+│   ├── gdb_guide.md        # GDB Kullanım Rehberi
+│   └── syscall_table.md    # Linux Syscall Tablosu
 └── README.md
 ```
 
