@@ -263,6 +263,12 @@ Bu bir öğrenme reposudur. Hata veya iyileştirme önerilerin varsa:
 
 **⭐ Beğendiysen yıldız atmayı unutma!**
 
-Made with ❤️ and lots of `MOV` instructions
+---
+
+### 👤 Geliştirici
+
+**Bahattin Yunus** tarafından bir öğrenme ve keşif yolculuğu olarak hazırlanmıştır. Low-level dünyasına olan tutku ve `MOV` komutlarının eşsiz dansıyla... 🚀
+
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/bahattinyunus)
 
 </div>
