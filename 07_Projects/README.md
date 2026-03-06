@@ -7,6 +7,23 @@
 | [`calculator.asm`](./calculator.asm) | İnteraktif hesap makinesi (+, -, *, /) |
 | [`string_utils.asm`](./string_utils.asm) | strlen, strcpy, strrev, toupper, strcmp kütüphanesi |
 | [`number_printer.asm`](./number_printer.asm) | Decimal, Hex, Binary format yazdırıcı |
+| [`echo_server.asm`](./echo_server.asm) | TCP/IP Echo Server (Socket Programlama) |
+| [`matrix_rain.asm`](./matrix_rain.asm) | Terminal Matrix Rain Efekti |
+
+---
+
+## 🌐 Echo Server
+Linux Socket API kullanarak 8080 portunu dinleyen bir TCP sunucusu.
+- `socket`, `bind`, `listen`, `accept` syscall'ları.
+- Network programlama temelleri.
+
+---
+
+## 🌧️ Matrix Rain
+Terminal üzerinde ANSI escape dizileri kullanarak görsel bir şov sunar.
+- `nanosleep` ile zamanlama.
+- Rastgele sayı üretimi (LCG algoritması).
+- ANSI renk ve koordinat kontrolü.
 
 ---
 

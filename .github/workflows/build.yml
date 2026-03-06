@@ -25,28 +25,13 @@ jobs:
           nasm --version
           ld --version | head -1
 
-      - name: Assemble all .asm files
+      - name: Build all programs with Makefile
         run: |
-          echo "🔧 Assembling all .asm files..."
-          FAILED=0
-          find . -name "*.asm" | sort | while read f; do
-            echo -n "  [ASM] $f ... "
-            obj="${f%.asm}.o"
-            if nasm -f elf64 "$f" -o "$obj" 2>/dev/null; then
-              echo "✅"
-              rm -f "$obj"
-            else
-              echo "❌"
-              nasm -f elf64 "$f" -o "$obj"
-              FAILED=$((FAILED + 1))
-            fi
-          done
-          if [ $FAILED -ne 0 ]; then
-            echo "::error::$FAILED file(s) failed to assemble"
-            exit 1
-          fi
-          echo ""
-          echo "✅ All files assembled successfully!"
+          make all
+
+      - name: Run syntax checks
+        run: |
+          make check
 
       - name: Link hello_world (smoke test)
         run: |

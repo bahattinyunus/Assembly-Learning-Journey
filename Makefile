@@ -21,10 +21,12 @@ SRCS_03 := 03_Procedures/functions.asm 03_Procedures/stack.asm
 SRCS_04 := 04_Memory/memory_addressing.asm
 SRCS_05 := 05_System_Calls/linux_syscalls.asm
 SRCS_06 := 06_Optimization/loop_unrolling.asm 06_Optimization/branch_opt.asm
-SRCS_07 := 07_Projects/calculator.asm 07_Projects/string_utils.asm 07_Projects/number_printer.asm 07_Projects/xor_cipher.asm
+SRCS_07 := 07_Projects/calculator.asm 07_Projects/string_utils.asm 07_Projects/number_printer.asm 07_Projects/xor_cipher.asm 07_Projects/echo_server.asm 07_Projects/matrix_rain.asm
 SRCS_08 := 08_FPU_SIMD/fpu_basics.asm 08_FPU_SIMD/simd_ops.asm
 SRCS_09 := 09_Inline_Asm/inline.c
 SRCS_10 := 10_OS_Dev/boot.asm
+LIB_SRC := lib/lib.asm
+LIB_OBJ := bin/lib/lib.o
 
 ALL_SRCS := $(SRCS_00) $(SRCS_01) $(SRCS_02) $(SRCS_03) $(SRCS_04) $(SRCS_05) $(SRCS_06) $(SRCS_07) $(SRCS_08)
 ASM_ONLY := $(filter %.asm, $(ALL_SRCS) $(SRCS_10))
@@ -34,7 +36,7 @@ BINS := $(patsubst %.asm, bin/%, $(ALL_SRCS))
 
 .PHONY: all clean hello run check dirs
 
-all: dirs $(BINS) bin/09_Inline_Asm/inline bin/10_OS_Dev/boot
+all: dirs $(LIB_OBJ) $(BINS) bin/09_Inline_Asm/inline bin/10_OS_Dev/boot
 	@echo ""
 	@echo "✅ Tüm programlar başarıyla derlendi!"
 	@echo "   Binaries: bin/ dizininde"
@@ -43,16 +45,21 @@ dirs:
 	@mkdir -p bin/00_Basics bin/01_Data_Types bin/02_Control_Flow \
 	           bin/03_Procedures bin/04_Memory bin/05_System_Calls \
 	           bin/06_Optimization bin/07_Projects bin/08_FPU_SIMD \
-	           bin/09_Inline_Asm bin/10_OS_Dev
+	           bin/09_Inline_Asm bin/10_OS_Dev bin/lib
+
+# Lib kuralı
+$(LIB_OBJ): $(LIB_SRC)
+	@echo "  [LIB] $<"
+	@$(NASM) $(NASMFLAGS) $< -o $@
 
 # Genel kural: .asm -> .o -> binary
-bin/%: %.asm
+bin/%: %.asm $(LIB_OBJ)
 	@echo "  [ASM] $<"
 	@if [ "$*" = "10_OS_Dev/boot" ]; then \
 		$(NASM) -f bin $< -o $@; \
 	else \
 		$(NASM) $(NASMFLAGS) $< -o $@.o; \
-		$(LD) $(LDFLAGS) $@.o -o $@; \
+		$(LD) $(LDFLAGS) $@.o $(LIB_OBJ) -o $@; \
 		rm -f $@.o; \
 	fi
 	@echo "  [OK ] $@"
